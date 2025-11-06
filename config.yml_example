@@ -1,0 +1,10 @@
+router:
+  ip: "192.168.100.1"
+  password: "your password"
+
+mqtt:
+  broker: "192.168.1.99"
+  port: 1883
+  username: "user"
+  password: "your password"
+  topic_phone_state: "vodafone/phone/state"
