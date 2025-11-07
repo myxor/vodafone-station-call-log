@@ -200,7 +200,11 @@ class Router:
             print(f"Logout error: {e}")
 
 def clean_call_records(call_records):
-    today_date_str = datetime.date.today().strftime("%Y-%m-%d")
+    today_date = datetime.date.today()
+    today_date_str = today_date.strftime("%Y/%m/%d")
+
+    yesterday_date = today_date - datetime.timedelta(days=1)
+    yesterday_date_str = yesterday_date.strftime("%Y/%m/%d")
 
     cleaned_records = []
 
@@ -210,16 +214,14 @@ def clean_call_records(call_records):
 
         # Check for the specific placeholder string
         if cleaned_record.get('Date') == 'PAGE_CALL_LOG_TABLE_TODAY':
-            # Replace the placeholder with the actual date
             cleaned_record['Date'] = today_date_str
+        elif cleaned_record.get('Date') == 'PAGE_CALL_LOG_TABLE_YESTERDAY':
+            cleaned_record['Date'] = yesterday_date_str
 
         if cleaned_record.get('Duration') == "":
             cleaned_record['Duration'] = 0
 
-        # Add the cleaned record to the new list
         cleaned_records.append(cleaned_record)
-
-    #print(cleaned_records)
 
     return cleaned_records
 
