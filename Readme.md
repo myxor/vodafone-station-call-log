@@ -35,7 +35,46 @@ pip install -r requirements.txt
 python vodafone_mqtt.py
 ```
 
-5. Integrate to Home Assistant.
+5. Integration to Home Assistant is done by the script
+
+## Home-Assistant sensors
+
+The script will create a sensor called `sensor.vodafone_station_router_call_log_summary` showing the number of calls in the log as value:
+
+    records:
+    - CallType: Dialed
+        Date: "2025-11-06"
+        Duration: 0
+        ExternalNumber: "017xxxxxxx"
+        ParameterIndex: 2
+        Time: "10:14"
+    - CallType: Missed
+        Date: "2025-11-06"
+        Duration: 0
+        ExternalNumber: "017xxxxxxx"
+        ParameterIndex: 1
+        Time: "7:33"
+    unit_of_measurement: calls
+    icon: mdi:phone-missed-outline
+    friendly_name: Vodafone Station Router Call Log Summary
+
+### Sensor to show type of last call type
+
+    {% set records = state_attr('sensor.vodafone_station_router_call_log_summary', 'records') %}
+    {% if records %}
+    {{ records[0].CallType }}
+    {% else %}
+    -
+    {% endif %}
+  
+### Sensor to show type of last calls external number
+    
+    {% set records = state_attr('sensor.vodafone_station_router_call_log_summary', 'records') %}
+    {% if records %}
+    {{ records[0].ExternalNumber }}
+    {% else %}
+    None
+    {% endif %}
 
 ## Thanks
 
